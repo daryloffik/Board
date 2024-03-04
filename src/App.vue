@@ -2,11 +2,19 @@
 import HelloWorld from './components/HelloWorld.vue'
 import Image from './components/Image.vue'
 import BoardForm from './components/BoardForm.vue'
+import SignIn from './components/SignIn.vue'
+import SignUp from './components/SignUp.vue'
 import { ref } from 'vue'
+import { useCurrentUser } from 'vuefire'
 
 const showAddButton =ref(false);
-setInterval(showAddButton.value = true,2)
 
+setInterval(showAddButton.value = true,2);
+const user = useCurrentUser();
+
+const showForm =ref(false);
+const showDropdown =ref(false);
+ console.log(showForm.value)
 </script>
 
 <template >
@@ -16,21 +24,22 @@ setInterval(showAddButton.value = true,2)
       Logo
      </div>
      <div class="flex flex-row gap-3">
-       <div class="p-3 pt-8  rounded-b-2xl cursor-pointer " :class="{addButton : showAddButton}" >
+       <div class="p-3 pt-8  rounded-b-2xl cursor-pointer transition hover:p-8 duration-500" :class="{addButton : showAddButton}" @click="showForm = !showForm">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 stroke-white">
   <path fill-rule="evenodd" d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z" clip-rule="evenodd" />
 </svg>
 
        </div>
-   <div class="flex flex-row gap-3 items-center justify-center">
-    <div class="bg-slate-300 h-fit p-2 m-2 rounded-xl cursor-pointer">
+   <div class="flex flex-row gap-3 items-center justify-center cursor-pointer " @click="showDropdown = !showDropdown">
+    <div class="bg-slate-300 h-fit p-2 m-2 rounded-xl ">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 fill-white">
   <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
 </svg>
 
        </div>
       <div class="hidden lg:flex lg:flex-row mr-5">
-        <p class="text-slate-400  "> Anthony Webb</p>
+        <p class="text-slate-400" > {{ user?.email || 'Anthony'}}</p>
+        
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 fill-slate-300">
   <path fill-rule="evenodd" d="M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z" clip-rule="evenodd" />
 </svg>
@@ -38,8 +47,16 @@ setInterval(showAddButton.value = true,2)
       </div>
    </div>
      </div>
-     <div>
-
+     <div class="bg-white p-5 flex flex-col rounded-xl absolute right-2 top-20 font-medium " v-if=" showDropdown">
+      <p class="border-b-2 border-blue-950 hover:bg-slate-400 flex flex-row text-blue-950 transition-all duration-500 cursor-pointer mb-2 text-lg ">
+        Se déconnecter
+      </p>
+      <p class="border-b-2 border-blue-950 hover:bg-slate-400 flex flex-row text-blue-950 transition-all duration-500 cursor-pointer mb-2 text-lg  ">
+        Se connecter
+      </p>
+      <p class="border-b-2 border-blue-950 hover:bg-slate-400 flex flex-row text-blue-950 transition-all duration-500 cursor-pointer text-lg  ">
+        S'inscrire
+      </p>
      </div>
     </div>
     <div >
@@ -50,7 +67,9 @@ setInterval(showAddButton.value = true,2)
     
     </div>
     <Image class="-translate-y-44 min-h-screen md:ml-24 lg:ml-80"></Image>
-    <BoardForm class="absolute top-72 lg:left-[22rem] md:left-[09rem]"></BoardForm>
+    <BoardForm class="absolute top-72 lg:left-[22rem] md:left-[09rem]" v-if="showForm"></BoardForm>
+    <SignIn></SignIn>
+ 
 </template>
 
 <style scoped>

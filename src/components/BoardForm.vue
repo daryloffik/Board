@@ -27,10 +27,10 @@ else{
 </script>
 
 <template>
-    <div class="rounded-2xl bg-white p-10 flex flex-col w-fit  items-center justify-center shadow-xl border ">
-     <form action="" v-on:submit.prevent="addCardProps">
-        <input class="appearance-none bg-transparent  w-full text-gray-700  leading-tight focus:outline-none border-b-2 border-blue-900 mb-5 " type="text" placeholder="Board Name" v-model="name">
-        <input class="appearance-none bg-transparent  w-full text-gray-700  leading-tight focus:outline-none border-b-2 border-blue-900  mb-8" type="text" placeholder="Number of members" v-model.number="numberOfMember">
+    <div class=" w-full lg:max-w-xl  shadow-xl border bg-white rounded-2xl ">
+     <form action="" v-on:submit.prevent="addCardProps" class="flex flex-col   items-center justify-center   p-8  py-10 ">
+        <input class="appearance-none bg-transparent   text-gray-700 w-full  focus:outline-none border-b-2 border-blue-900 mb-5 " type="text" placeholder="Board Name" v-model="name"><br>
+        <input class="appearance-none bg-transparent   text-gray-700 w-full focus:outline-none border-b-2 border-blue-900  mb-8" type="text" placeholder="Number of members" v-model.number="numberOfMember">
         <input type="submit" value="Créer" class="bg-blue-950 p-2 rounded-2xl w-full" >
      </form>
      <div v-for="card in CardProps" :key="card.id" class="text-red-800">
